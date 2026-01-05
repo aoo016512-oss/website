@@ -1,0 +1,1619 @@
+@charset "UTF-8";
+
+/* =====================
+   초기화 및 공통 스타일
+===================== */
+
+/* 전체 요소 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 리스트 스타일 제거 */
+ul {
+    list-style: none;
+}
+
+/* 링크 기본 스타일 제거 */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 본문 기본 스타일 */
+body {
+    min-width: 1200px;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #222;
+    background: #f7f7f7;
+}
+
+/* 전체 래퍼 */
+#wrap {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* 컨테이너 (최대 너비 1200px, 중앙 정렬) */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* =====================
+    상단 유틸리티 바 (로그인, 언어선택, 화면크기 조절)
+===================== */
+.top-bar {
+    width: 100%;
+    background: #2f5ea8;
+    color: #fff;
+    font-size: 13px;
+}
+
+/* 상단 바 메뉴 리스트 */
+.top-bar ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 8px 0;
+}
+
+/* 상단 바 링크 스타일 */
+.top-bar a {
+    color: #fff;
+    transition: opacity 0.3s;
+}
+
+/* 상단 바 링크 호버 효과 */
+.top-bar a:hover {
+    opacity: 0.8;
+}
+
+/* =====================
+    헤더 영역 (로고 및 메인 네비게이션)
+===================== */
+#header {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    position: relative;
+}
+
+/* 헤더 내부 레이아웃 */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    position: relative;
+}
+
+/* 로고 이미지 */
+.logo img {
+    height: 40px;
+}
+
+/* 메인 네비게이션 메뉴 */
+.manu {
+    position: relative;
+}
+
+.manu ul {
+    display: flex;
+    gap: 40px;
+    font-weight: 500;
+    position: relative;
+}
+
+/* 메인 네비게이션 메뉴 아이템 */
+.manu ul li {
+    position: relative;
+}
+
+/* 메인 네비게이션 링크 호버 효과 */
+.manu > ul > li > a:hover {
+    color: #2f5ea8;
+}
+
+/* 서브메뉴가 있는 메뉴 아이템 */
+.has-submenu {
+    position: relative;
+}
+
+/* 서브메뉴 컨테이너 (고정 위치) */
+.submenu-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    width: 900px;
+    max-width: calc(100vw - 40px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* 서브메뉴 표시 (호버 시) */
+.manu:hover .submenu-container,
+.submenu-container:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+/* 서브메뉴 */
+.submenu {
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 25px;
+    border: 1px solid #e9ecef;
+}
+
+/* 메인 메뉴와 서브메뉴 사이 연결 영역 (호버 유지) */
+.manu::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 15px;
+    z-index: 999;
+}
+
+/* 서브메뉴 그리드 */
+.submenu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* 서브메뉴 아이템 */
+.submenu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+/* 서브메뉴 아이콘 */
+.submenu-item span {
+    color: #999;
+    font-size: 12px;
+    margin-left: 8px;
+    transition: color 0.2s ease;
+}
+
+/* 서브메뉴 아이템 호버 효과 */
+.submenu-item:hover {
+    background: #2f5ea8;
+    color: #fff;
+}
+
+.submenu-item:hover span {
+    color: #fff;
+}
+
+/* 모바일 햄버거 메뉴 버튼 */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* 햄버거 메뉴 아이콘 (3개 선) */
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #333;
+    display: block;
+    transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .manu {
+        display: none;
+    }
+
+    .header-inner {
+        padding: 0 15px;
+    }
+
+    .manu ul {
+        gap: 20px;
+        font-size: 14px;
+    }
+}
+
+/* =====================
+    메인 비주얼 섹션 (히어로 섹션 - 배경 이미지와 메인 콘텐츠)
+===================== */
+.main-visual {
+    width: 100%;
+    min-height: 520px;
+    background-color: #2f5ea8;
+    position: relative;
+    color: #fff;
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+/* 배경 이미지 슬라이더 컨테이너 */
+.main-visual::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: 
+        url("../images/Frame 1.jpg") no-repeat left top,
+        url("../images/Frame 1.jpg") no-repeat right top;
+    background-size: 1920px auto;
+    background-position: 0 0, 1920px 0;
+    z-index: 0;
+    transition: filter 0.4s ease;
+    filter: blur(0);
+    animation: slideBackground 20s linear infinite;
+}
+
+/* 배경 슬라이드 애니메이션 */
+@keyframes slideBackground {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* 검색창 호버 시 배경 흐릿하게 */
+.main-visual:has(.search-box:hover)::before {
+    filter: blur(8px);
+}
+
+/* 대상별 메뉴 버튼 호버 시 배경 흐릿하게 */
+.main-visual:has(.target-btn:hover)::before {
+    filter: blur(8px);
+}
+
+/* 빠른 링크 카드 호버 시 배경 흐릿하게 */
+.main-visual:has(.quick-link-card:hover)::before {
+    filter: blur(8px);
+}
+
+
+/* 메인 비주얼 내부 컨테이너 */
+.main-visual .container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* 페이드인 업 애니메이션 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.visual-inner {
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+/* 검색창 영역 */
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 0;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+}
+
+/* 검색 입력창 */
+.search-box input {
+    width: 480px;
+    height: 48px;
+    margin-top: 0px;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    padding: 0 20px;
+}
+
+/* 검색창 돋보기 아이콘 */
+.search-box img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 0 5px 5px 0;
+    background: #fff;
+    border-left: none;
+}
+
+/* 검색 버튼 */
+.search-box button {
+    width: 48px;
+    height: 48px;
+    margin-left: -48px;
+    background: #2f5ea8;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    position: relative;
+}
+
+/* 검색 버튼 아이콘 */
+.search-box button::after {
+    content: "🔍";
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 메인 타이틀 텍스트 영역 */
+.visual-text {
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+/* 메인 타이틀 (한글) */
+.visual-text .title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* 메인 타이틀 (영문) */
+.visual-text .title-e {
+    margin-top: 5px;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* 대상별 메뉴 래퍼 (학생/학부모, 교사/교직원, 일반/구직자) */
+.target-menu-wrapper {
+    margin-top: 40px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* 대상별 메뉴 버튼 컨테이너 */
+.target-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 200px;
+}
+
+/* 대상별 메뉴 버튼 */
+.target-menu button {
+    width: 200px;
+    height: 70px;
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-align: left;
+    padding: 0 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* 대상별 메뉴 버튼 호버 효과 */
+.target-menu button:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* 대상별 메뉴 버튼 활성화 상태 (검정 배경) */
+.target-menu button.active {
+    background: #000;
+    color: #fff;
+}
+
+/* 빠른 링크 서브 메뉴 (사이버학습, 고교입시정보 등) */
+.quick-links-submenu {
+    flex: 1;
+    display: none;
+    margin-left: 0;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* 빠른 링크 서브 메뉴 활성화 상태 */
+.quick-links-submenu.active {
+    display: flex;
+    align-items: center;
+}
+
+/* 서브 메뉴 슬라이드 인 애니메이션 */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 빠른 링크 그리드 레이아웃 */
+.quick-links-submenu .quick-links-grid {
+    display: flex;
+    gap: 0;
+    flex-wrap: nowrap;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* 카드 구분선 (화살표) */
+.card-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+/* =====================
+    빠른 링크 (서브 메뉴용)
+===================== */
+.quick-links {
+    background: #fff;
+    padding: 40px 0;
+}
+
+/* 빠른 링크 카드 (서브 메뉴 내) */
+.quick-links-submenu .quick-link-card {
+    flex: 1;
+    min-width: 200px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 65px 20px;
+    border-radius: 0;
+    position: relative;
+    transition: background 0.3s ease;
+    border: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* 빠른 링크 카드 호버 효과 (투명 검정 → 완전 검정) */
+.quick-links-submenu .quick-link-card:hover {
+    background: #000;
+}
+
+/* 빠른 링크 카드 제목 */
+.quick-links-submenu .quick-link-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* 빠른 링크 카드 설명 */
+.quick-links-submenu .quick-link-card p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 빠른 링크 카드 화살표 아이콘 */
+.quick-links-submenu .quick-link-card .arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* =====================
+    반응형 디자인 (태블릿 및 모바일)
+===================== */
+
+/* 태블릿 크기 (1200px 이하) */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .target-menu-wrapper {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .target-menu {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .target-menu button {
+        width: auto;
+        flex: 1;
+        height: 60px;
+    }
+
+    .quick-links-submenu {
+        margin-left: 0;
+        padding-left: 0;
+        margin-top: 20px;
+    }
+
+    .quick-links-submenu .quick-links-grid {
+        flex-wrap: wrap;
+    }
+
+    .card-separator {
+        display: none;
+    }
+
+    .main-visual {
+        background-attachment: scroll;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .main-visual {
+        min-height: 400px;
+        padding: 40px 0;
+    }
+
+    .search-box input {
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .visual-text .title {
+        font-size: 28px;
+    }
+
+    .target-menu {
+        flex-direction: column;
+    }
+
+    .target-menu button {
+        width: 100%;
+    }
+
+    .quick-links-submenu .quick-link-card {
+        min-width: 100%;
+    }
+
+    .frequent-menu {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        max-height: none;
+        margin: 20px 0;
+    }
+
+    .info-inner {
+        flex-direction: column;
+    }
+
+    .info-cards {
+        flex-direction: column;
+    }
+
+    .info-director {
+        width: 100%;
+    }
+
+    .culture-content {
+        flex-direction: column;
+    }
+
+    .civil-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =====================
+    빠른 링크 (일반 섹션용 - 다른 곳에서 사용)
+===================== */
+.quick-links-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* 빠른 링크 카드 (일반) */
+.quick-link-card {
+    background: #f8f9fa;
+    padding: 30px 20px;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+}
+
+/* 빠른 링크 카드 호버 효과 */
+.quick-link-card:hover {
+    background: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #2f5ea8;
+}
+
+/* 빠른 링크 카드 제목 */
+.quick-link-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2f5ea8;
+}
+
+/* 빠른 링크 카드 설명 */
+.quick-link-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* 빠른 링크 카드 화살표 */
+.quick-link-card .arrow {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    font-size: 24px;
+    color: #2f5ea8;
+    font-weight: bold;
+}
+
+/* =====================
+    메인 정보 섹션 (비디오 카드 및 교육감 소개)
+===================== */
+.main-info {
+    width: 100%;
+    background: #fff;
+    padding: 40px 0;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 메인 정보 내부 레이아웃 */
+.info-inner {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* 비디오 카드 컨테이너 */
+.info-cards {
+    flex: 1;
+    display: flex;
+    gap: 60px;
+}
+
+/* 비디오 카드 */
+.info-card {
+    background: #f0f0f0;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 350px;
+    display: flex;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 첫 번째 비디오 카드 배경 (보라색 그라데이션) */
+.info-card:first-child {
+    background: url(../images/news1.png)no-repeat center;
+}
+
+/* 두 번째 비디오 카드 배경 (핑크 그라데이션) */
+.info-card:last-child {
+    background: url(../images/news2.png)no-repeat center;
+}
+
+/* 비디오 카드 제목 */
+.info-card .card-title {
+    font-size: 23px;
+    font-weight: 600;
+    color: #000000;
+    z-index: 2;
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    width: 350px;
+    height: 80px;
+}
+
+/* 비디오 재생 버튼 아이콘 */
+.info-card .play {
+
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: black;
+    z-index: 1;
+}
+
+/* 교육감 소개 영역 (사이드바) */
+.info-director {
+    width: 350px;
+}
+
+/* 교육감 콘텐츠 레이아웃 */
+.director-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* 교육감 텍스트 영역 */
+.director-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 교육감 사진 */
+.director-content img {
+    width: 150px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+/* 교육감 관련 메뉴 (인사말, 비전, 정책) */
+.director-menu {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 교육감 메뉴 링크 */
+.director-menu li a {
+    font-size: 14px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+/* 교육감 메뉴 링크 호버 효과 */
+.director-menu li a:hover {
+    color: #2f5ea8;
+}
+
+/* 교육감 소개 텍스트 */
+.director-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* 소셜 아이콘 컨테이너 */
+.social-icons {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+/* 소셜 아이콘 */
+.social-icon {
+    width: 32px;
+    height: 32px;
+    background: #2f5ea8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* =====================
+    자주 찾는 메뉴 섹션 (오른쪽 고정 사이드바)
+===================== */
+.frequent-menu {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    background: #fff;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid #e9ecef;
+}
+
+/* 자주 찾는 메뉴 제목 */
+.frequent-menu h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #fff;
+    background: #2f5ea8;
+    padding: 18px 20px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid #1e4a7a;
+}
+
+/* 자주 찾는 메뉴 리스트 (세로 레이아웃) */
+.frequent-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* 자주 찾는 메뉴 아이템 */
+.frequent-menu-list li {
+    background: #fff;
+    padding: 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.frequent-menu-list li:last-child {
+    border-bottom: none;
+}
+
+/* 자주 찾는 메뉴 아이템 호버 효과 */
+.frequent-menu-list li:hover {
+    background: #f0f7ff;
+    transform: translateX(-3px);
+    transition: all 0.2s ease;
+}
+
+.frequent-menu-list li:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #2f5ea8;
+}
+
+.frequent-menu-list li:hover a {
+    color: #2f5ea8;
+    font-weight: 600;
+}
+
+.frequent-menu-list li:hover .menu-icon {
+    background: #e6f2ff;
+}
+
+/* 메뉴 아이콘 */
+.menu-icon {
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f7f7;
+    flex-shrink: 0;
+    border-right: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+/* 자주 찾는 메뉴 링크 */
+.frequent-menu-list a {
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+    padding: 15px 15px 15px 12px;
+    flex: 1;
+    display: block;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+/* =====================
+    공지사항 및 보도자료 섹션
+===================== */
+.notice-area {
+    width: 100%;
+    background: #f7f7f7;
+    padding: 40px 0;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* 공지사항 탭 메뉴 */
+.notice-tabs {
+    display: flex;
+    border-bottom: 2px solid #2f5ea8;
+}
+
+/* 공지사항 탭 아이템 */
+.notice-tabs li {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px 4px 0 0;
+}
+
+/* 공지사항 탭 호버 효과 */
+.notice-tabs li:hover {
+    background: rgba(47, 94, 168, 0.1);
+}
+
+/* 공지사항 탭 활성화 상태 */
+.notice-tabs .active {
+    background: #2f5ea8;
+    color: #fff;
+}
+
+/* 공지사항 리스트 컨테이너 */
+.notice-list {
+    background: #fff;
+    padding: 20px;
+}
+
+/* 공지사항 리스트 아이템 */
+.notice-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px;
+    border-bottom: 1px solid #e9ecef;
+    align-items: center;
+}
+
+/* 공지사항 리스트 마지막 아이템 (구분선 제거) */
+.notice-list li:last-child {
+    border-bottom: none;
+}
+
+/* 공지사항 링크 */
+.notice-list a {
+    color: #333;
+    font-size: 15px;
+    flex: 1;
+}
+
+/* 공지사항 링크 호버 효과 */
+.notice-list a:hover {
+    color: #2f5ea8;
+    text-decoration: underline;
+}
+
+/* 공지사항 날짜 */
+.notice-list .date {
+    color: #999;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+/* 공지사항 더보기 영역 */
+.notice-more {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 공지사항 더보기 링크 */
+.notice-more>a {
+    color: #2f5ea8;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* 공지사항 관련 링크 컨테이너 */
+.notice-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* 공지사항 관련 링크 */
+.notice-links a {
+    color: #666;
+    font-size: 14px;
+}
+
+/* =====================
+    민원안내 섹션
+===================== */
+.civil-area {
+    width: 100%;
+    padding: 50px 0;
+    background: #fff;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* 민원안내 제목 */
+.civil-area h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* 민원 서비스 리스트 (그리드 레이아웃) */
+.civil-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* 민원 서비스 아이템 */
+.civil-list li {
+    border: 1px solid #e9ecef;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 민원 서비스 아이템 호버 효과 */
+.civil-list li:hover {
+    background: #f0f7ff;
+    border-color: #2f5ea8;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(47, 94, 168, 0.15);
+}
+
+/* 민원 서비스 링크 */
+.civil-list a {
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* =====================
+    문화교육 섹션
+===================== */
+.culture-area {
+    width: 100%;
+    background: #f7f7f7;
+    padding: 60px 0;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* 문화교육 제목 */
+.culture-area h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* 문화교육 래퍼 */
+.culture-wrap {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 문화교육 콘텐츠 레이아웃 */
+.culture-content {
+    display: flex;
+    gap: 30px;
+}
+
+/* 문화교육 카테고리 탭 */
+.culture-category {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 100px;
+}
+
+/* 문화교육 카테고리 아이템 */
+.culture-category li {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+/* 문화교육 카테고리 호버 효과 */
+.culture-category li:hover {
+    background: #f0f0f0;
+}
+
+/* 문화교육 카테고리 활성화 상태 */
+.culture-category .active {
+    background: transparent;
+    color: #333;
+    font-weight: 600;
+    text-decoration: underline;
+    border-radius: 0;
+}
+
+/* 문화교육 슬라이더 */
+.culture-slider {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
+
+/* 슬라이더 버튼 (이전/다음) */
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+/* 슬라이더 버튼 호버 효과 */
+.slider-btn:hover {
+    background: #2f5ea8;
+    color: #fff;
+    border-color: #2f5ea8;
+}
+
+/* 문화교육 카드 래퍼 */
+.culture-cards-wrapper {
+    flex: 1;
+    display: flex;
+    gap: 70px;
+    overflow: hidden;
+}
+
+/* 문화교육 카드 */
+.culture-card {
+    min-width: 240px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.culture-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 문화교육 카드 이미지 */
+.culture-card-img {
+    width: 100%;
+    height: 300px;
+    background: url(../images/Rectangle\ 173.jpg)no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 두 번째 문화교육 카드 이미지 (핑크 그라데이션) */
+.culture-card:nth-child(2) .culture-card-img {
+    background: url(../images/Rectangle\ 174.jpg)no-repeat;
+}
+
+/* 세 번째 문화교육 카드 이미지 (파란색 그라데이션) */
+.culture-card:nth-child(3) .culture-card-img {
+    background: url(../images/Rectangle\ 175.jpg)no-repeat;
+}
+
+/* 문화교육 카드 콘텐츠 - 제거됨 (이미지로 전체 채움) */
+
+/* 문화교육 카테고리 태그 (평소: 이미지 하단, 호버 시: 오버레이 상단) */
+.culture-category-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #000;
+    border-radius: 0;
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    bottom: 0.5px;
+    z-index: 3;
+    transition: all 0.3s ease-out;
+}
+
+/* 문화교육 카드 오버레이 (호버 시 슬라이드 업) */
+.culture-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.75);
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+    z-index: 2;
+}
+
+/* 카드 이미지 호버 시 오버레이 슬라이드 업 */
+.culture-card-img:hover .culture-card-overlay {
+    transform: translateY(0);
+}
+
+/* 카드 이미지 호버 시 태그가 오버레이 상단으로 올라감 */
+.culture-card-img:hover .culture-category-tag {
+    bottom: auto;
+    top: calc(49% + 10px);
+    transform: translateY(0);
+}
+
+/* 오버레이 콘텐츠 */
+.overlay-content {
+    padding: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+
+/* 오버레이 텍스트 스타일 */
+.overlay-content p {
+    font-size: 12px;
+    margin: 3px 0;
+    color: #fff;
+    line-height: 1.4;
+}
+
+.overlay-period,
+.overlay-location,
+.overlay-target {
+    font-size: 12px;
+    color: #fff;
+}
+
+/* 오버레이 더보기 버튼 */
+.overlay-more-btn {
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: all 0.3s;
+}
+
+.overlay-more-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* 문화교육 카드 제목 */
+.culture-card-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* 문화교육 카드 설명 */
+.culture-card-content p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* 더보기 버튼 */
+.more-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #00000088;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* =====================
+    푸터 영역
+===================== */
+#footer {
+    width: 100%;
+    background: #2b2b2b;
+    color: #aaa;
+}
+
+/* 푸터 상단 영역 (배너 및 링크 그룹) */
+.footer-top {
+    background: #333;
+    padding: 30px 0;
+    border-bottom: 1px solid #444;
+}
+
+/* 푸터 상단 제목 */
+.footer-top h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* 배너 슬라이더 */
+.banner-slider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* 배너 슬라이더 버튼 */
+.banner-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #555;
+    background: #444;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 배너 리스트 */
+.banner-list {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    overflow: hidden;
+}
+
+/* 배너 링크 */
+.banner-list a {
+    color: #aaa;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 8px 15px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+/* 배너 링크 호버 효과 */
+.banner-list a:hover {
+    color: #fff;
+    border-color: #2f5ea8;
+}
+
+/* 푸터 링크 그룹 */
+.footer-links {
+    display: flex;
+    gap: 30px;
+}
+
+/* 푸터 링크 그룹 제목 */
+.footer-link-group h4 {
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+/* 푸터 링크 그룹 제목 호버 효과 */
+.footer-link-group h4:hover {
+    color: #2f5ea8;
+}
+
+/* 푸터 하단 영역 (로고, 정책 링크, 연락처 정보) */
+.footer-bottom {
+    padding: 40px 0;
+}
+
+/* 푸터 정보 컨테이너 */
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 푸터 로고 */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* 푸터 로고 이미지 */
+.footer-logo img {
+    height: 40px;
+}
+
+/* 푸터 로고 텍스트 */
+.footer-logo h2 {
+    color: #fff;
+    font-size: 20px;
+}
+
+/* 정책 링크 컨테이너 */
+.footer-policy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* 정책 링크 */
+.footer-policy a {
+    color: #aaa;
+    font-size: 13px;
+    padding-right: 15px;
+    border-right: 1px solid #555;
+}
+
+/* 정책 링크 마지막 아이템 (구분선 제거) */
+.footer-policy a:last-child {
+    border-right: none;
+}
+
+/* 정책 링크 호버 효과 */
+.footer-policy a:hover {
+    color: #fff;
+}
+
+/* 연락처 정보 */
+.footer-contact {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* 연락처 정보 문단 */
+.footer-contact p {
+    margin: 5px 0;
+}
+
+/* 저작권 정보 */
+.copyright {
+    color: #777;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* =====================
+    추가 반응형 스타일 (작은 모바일)
+===================== */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .main-visual {
+        min-height: 350px;
+        padding: 30px 0;
+    }
+
+    .visual-text .title {
+        font-size: 24px;
+    }
+
+    .visual-text .title-e {
+        font-size: 14px;
+    }
+
+    .frequent-menu {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        max-height: none;
+        margin: 20px 0;
+    }
+
+    .civil-list {
+        grid-template-columns: 1fr;
+    }
+
+    .culture-cards-wrapper {
+        flex-direction: column;
+    }
+
+    .culture-card {
+        min-width: 100%;
+    }
+
+    .footer-policy {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-policy a {
+        border-right: none;
+        border-bottom: 1px solid #555;
+        padding-bottom: 10px;
+    }
+
+    .footer-policy a:last-child {
+        border-bottom: none;
+    }
+}
